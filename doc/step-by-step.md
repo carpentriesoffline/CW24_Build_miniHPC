@@ -59,7 +59,7 @@ This will show a pop-up window where the following configuration options can be 
 
 ![](../imgs/screenshots/imager-os-config.png)
 
-and enable SSH with password authentication (alternatively, adding a ssh public key). If you would like to set up easy access to the Pi via an ssh key, please see [here](ssh-setup.md).
+Then go to the `SERVICES` tab and enable SSH with password authentication (alternatively, adding a ssh public key). If you would like to set up easy access to the Pi via an ssh key, please see [here](ssh-setup.md).
 
 _TODO: Section on generating an ssh key-pair._
 
@@ -165,6 +165,51 @@ ff02::2		ip6-allrouters
 192.168.0.5	pixie005
 ```
 
+- Configure Slurm
+add the following to /etc/slurm/slurm.conf
+```
+SlurmctldHost=pixie001(192.168.5.101)
+MpiDefault=none
+ProctrackType=proctrack/cgroup
+#ProctrackType=proctrack/linuxproc
+ReturnToService=1
+SlurmctldPidFile=/run/slurmctld.pid
+SlurmctldPort=6817
+SlurmdPidFile=/run/slurmd.pid
+SlurmdPort=6818
+SlurmdSpoolDir=/var/lib/slurm/slurmd
+SlurmUser=slurm
+StateSaveLocation=/var/lib/slurm/slurmctld
+SwitchType=switch/none
+TaskPlugin=task/affinity
+InactiveLimit=0
+KillWait=30
+MinJobAge=300
+SlurmctldTimeout=120
+SlurmdTimeout=300
+Waittime=0
+SchedulerType=sched/backfill
+SelectType=select/cons_res
+SelectTypeParameters=CR_Core
+AccountingStorageType=accounting_storage/none
+# AccountingStoreJobComment=YES
+AccountingStoreFlags=job_comment
+ClusterName=pixie
+JobCompType=jobcomp/none
+JobAcctGatherFrequency=30
+JobAcctGatherType=jobacct_gather/none
+SlurmctldDebug=info
+SlurmctldLogFile=/var/log/slurm/slurmctld.log
+SlurmdDebug=info
+SlurmdLogFile=/var/log/slurm/slurmd.log
+#adjust Nodes=pixie[002-006] to the number of nodes you have
+PartitionName=pixiecluster Nodes=pixie[002-006] Default=YES MaxTime=INFINITE State=UP
+RebootProgram=/etc/slurm/slurmreboot.sh
+```
+Restart slurm
+```
+sudo systemctl restart slurmctld
+```
 
 - Install ESSI
 
@@ -182,4 +227,49 @@ echo "source /cvmfs/software.eessi.io/versions/2023.06/init/bash" | sudo tee -a 
 sudo mkdir /sharedfs
 sudo chown nobody.nogroup -R /sharedfs
 sudo chmod 777 -R /sharedfs
+```
+
+- Install a client node
+Flash another SD card for a Raspberry Pi. Boot it up with internet access and run the following:
+
+```sudo apt-get install -y slurmd slurm-client munge vim ntp ntpdate```
+
+On a Linux laptop (or with a USB SD card reader) take an image of this:
+
+```dd if=/dev/mmcblk0 of=node.img```
+
+Copy node.img to the master Raspberry Pi's home directory.
+
+
+- Setup PXE booting
+Download the pxe-boot scripts:
+```git clone https://github.com/carpentriesoffline/pxe-boot.git
+cd pxe-boot
+./pxe-install
+```
+
+Initalise a PXE node:
+```
+./pxe-add <serial number> ../node.img <IP address>  <node name> <mac address>
+```
+
+for example:
+```
+./pxe-add fa917c3a ../node.img 192.168.5.105 pixie002 dc:a6:32:af:83:d0
+```
+
+This will create an entry with the serial number in /pxe-boot and /pxe-root. 
+
+- Copy the Slurm config to the node filesystems
+
+`cp /etc/slurm/slurm.conf /pxe-root/*/etc/slurm/`
+ 
+
+## Test PXE booting
+* Boot up a client
+* Run sinfo to see if the cluster is working
+You should see something like
+```
+PARTITION     AVAIL  TIMELIMIT  NODES  STATE NODELIST
+pixiecluster*    up   infinite      5   idle pixie[002-006]
 ```

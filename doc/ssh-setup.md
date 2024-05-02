@@ -1,6 +1,6 @@
 # Connecting to Pi
 
-## Termniology:
+## Terminology:
  * **Head node:** The main Pi that is connected to, and controls the job submission process.
  * **Compute node(s):** The Pi(s) where the jobs are run, and the compute takes place.
 
