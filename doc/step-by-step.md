@@ -40,7 +40,9 @@ Selecting the OS:
 
 ![](../imgs/screenshots/imager-OS-selection-2.png)
 
-it will ask if the user wants to do any customisation, select `EDIT SETTINGS`.
+Then click `Next`.
+
+It will ask if the user wants to do any customisation, select `EDIT SETTINGS`.
 
 ![](../imgs/screenshots/imager-customiser-dialog.png)
 
@@ -53,7 +55,7 @@ This will show a pop-up window where the following configuration options can be 
 
 ![](../imgs/screenshots/imager-os-config.png)
 
-and enable SSH with password authentication (alternatively, adding a ssh public key). If you would like to set up easy access to the Pi via an ssh key, please see [here](ssh-setup.md).
+Then go to the `SERVICES` tab and enable SSH with password authentication (alternatively, adding a ssh public key). If you would like to set up easy access to the Pi via an ssh key, please see [here](ssh-setup.md).
 
 _TODO: Section on generating an ssh key-pair._
 
