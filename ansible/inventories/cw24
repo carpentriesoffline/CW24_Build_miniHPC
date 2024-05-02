@@ -1,5 +1,5 @@
 [all]
-minihpc01
+minihpc01 ansible_host=10.9.141.205
 
 [all:vars]
 
