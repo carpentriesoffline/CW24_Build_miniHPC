@@ -280,10 +280,11 @@ for example:
 This will create an entry with the serial number in /pxe-boot and /pxe-root. 
 
 - Copy the Slurm config to the node filesystems
-Copy /etc/slurm/slurm.conf to /pxe-root/*/etc/slurm/
+
+`cp /etc/slurm/slurm.conf /pxe-root/*/etc/slurm/`
  
 
-- Test PXE booting
+## Test PXE booting
 * Boot up a client
 * Run sinfo to see if the cluster is working
 You should see something like
