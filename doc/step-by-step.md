@@ -166,7 +166,9 @@ ff02::2		ip6-allrouters
 ```
 
 - Configure Slurm
-add the following to /etc/slurm/slurm.conf
+
+Add the following to /etc/slurm/slurm.conf
+
 ```
 SlurmctldHost=pixie001(192.168.5.101)
 MpiDefault=none
@@ -206,8 +208,10 @@ SlurmdLogFile=/var/log/slurm/slurmd.log
 PartitionName=pixiecluster Nodes=pixie[002-006] Default=YES MaxTime=INFINITE State=UP
 RebootProgram=/etc/slurm/slurmreboot.sh
 ```
-Restart slurm
-```
+
+- Restart slurm
+
+```bash
 sudo systemctl restart slurmctld
 ```
 
@@ -242,8 +246,11 @@ Copy node.img to the master Raspberry Pi's home directory.
 
 
 - Setup PXE booting
+
 Download the pxe-boot scripts:
-```git clone https://github.com/carpentriesoffline/pxe-boot.git
+
+```bash
+git clone https://github.com/carpentriesoffline/pxe-boot.git
 cd pxe-boot
 ./pxe-install
 ```
