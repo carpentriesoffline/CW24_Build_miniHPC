@@ -2,7 +2,11 @@
 minihpc01
 
 [all:vars]
-NUMBER_OF_PIS = 4
 
 [headnode]
 minihpc01
+
+[computenodes]
+minihpc02
+minihpc03
+minihpc04
