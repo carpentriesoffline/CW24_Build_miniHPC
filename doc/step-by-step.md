@@ -186,9 +186,49 @@ ff02::2		ip6-allrouters
 192.168.0.5	pixie005
 ```
 
+- Configure Slurm
+add the following to /etc/slurm/slurm.conf
+```
+SlurmctldHost=pixie001(192.168.5.101)
+MpiDefault=none
+ProctrackType=proctrack/cgroup
+#ProctrackType=proctrack/linuxproc
+ReturnToService=1
+SlurmctldPidFile=/run/slurmctld.pid
+SlurmctldPort=6817
+SlurmdPidFile=/run/slurmd.pid
+SlurmdPort=6818
+SlurmdSpoolDir=/var/lib/slurm/slurmd
+SlurmUser=slurm
+StateSaveLocation=/var/lib/slurm/slurmctld
+SwitchType=switch/none
+TaskPlugin=task/affinity
+InactiveLimit=0
+KillWait=30
+MinJobAge=300
+SlurmctldTimeout=120
+SlurmdTimeout=300
+Waittime=0
+SchedulerType=sched/backfill
+SelectType=select/cons_res
+SelectTypeParameters=CR_Core
+AccountingStorageType=accounting_storage/none
+# AccountingStoreJobComment=YES
+AccountingStoreFlags=job_comment
+ClusterName=pixie
+JobCompType=jobcomp/none
+JobAcctGatherFrequency=30
+JobAcctGatherType=jobacct_gather/none
+SlurmctldDebug=info
+SlurmctldLogFile=/var/log/slurm/slurmctld.log
+SlurmdDebug=info
+SlurmdLogFile=/var/log/slurm/slurmd.log
+#adjust Nodes=pixie[002-006] to the number of nodes you have
+PartitionName=pixiecluster Nodes=pixie[002-006] Default=YES MaxTime=INFINITE State=UP
+RebootProgram=/etc/slurm/slurmreboot.sh
+```
 
 - Install ESSI
-- 
 ```
 mkdir essi
 cd essi
@@ -198,13 +238,11 @@ echo "source /cvmfs/software.eessi.io/versions/2023.06/init/bash" >> /etc/profil
 ```
 
 - Create a shared directory
-
 ```bash
 sudo mkdir /sharedfs
 sudo chown nobody.nogroup -R /sharedfs
 sudo chmod 777 -R /sharedfs
 ```
-
 
 - Install a client node
 Flash another SD card for a Raspberry Pi. Boot it up with internet access and run the following:
@@ -227,14 +265,25 @@ cd pxe-boot
 
 Initalise a PXE node:
 ```
-./pxe-add <serial number> ../node.img <IP address>  <node name>
+./pxe-add <serial number> ../node.img <IP address>  <node name> <mac address>
 ```
 
 for example:
 ```
-./pxe-add fa917c3a ../node.img 192.168.5.105 pixie002
+./pxe-add fa917c3a ../node.img 192.168.5.105 pixie002 
 ```
 
 This will create an entry with the serial number in /pxe-boot and /pxe-root. 
 
+- Copy the Slurm config to the node filesystems
+Copy /etc/slurm/slurm.conf to /pxe-root/*/etc/slurm/
+ 
 
+- Test PXE booting
+* Boot up a client
+* Run sinfo to see if the cluster is working
+You should see something like
+```
+PARTITION     AVAIL  TIMELIMIT  NODES  STATE NODELIST
+pixiecluster*    up   infinite      5   idle pixie[002-006]
+```
