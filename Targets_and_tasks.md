@@ -1,2 +1,4 @@
-[ ] Hardware requirements
-[ ] Assembling instructions
+|Done|Item|Issue|Links|
+|---|---|---|---|
+|[ ]|Hardware requirements| | |
+|[ ]|Assembling instructions| | |
