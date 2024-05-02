@@ -40,7 +40,9 @@ Selecting the OS:
 
 ![](../imgs/screenshots/imager-OS-selection-2.png)
 
-it will ask if the user wants to do any customisation, select `EDIT SETTINGS`.
+Then click `Next`.
+
+It will ask if the user wants to do any customisation, select `EDIT SETTINGS`.
 
 ![](../imgs/screenshots/imager-customiser-dialog.png)
 
