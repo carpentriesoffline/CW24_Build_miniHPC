@@ -274,7 +274,7 @@ Initalise a PXE node:
 
 for example:
 ```
-./pxe-add fa917c3a ../node.img 192.168.5.105 pixie002 
+./pxe-add fa917c3a ../node.img 192.168.5.105 pixie002 dc:a6:32:af:83:d0
 ```
 
 This will create an entry with the serial number in /pxe-boot and /pxe-root. 
