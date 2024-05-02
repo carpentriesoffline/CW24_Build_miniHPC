@@ -13,3 +13,7 @@ In detail, are objectives are to:
 * Draft instructor documentation to allow the delivery of this lesson.
   
 The project is built on previous work developing the hardware setup and on manual configuration of the cluster. Prior to this hack the setup procedure was informally documented and the system had not been tested with lesson material.
+
+We have produced:
+
+* [Step by step guide](doc/step-by-step.md) to set-up a mini-cluster.
