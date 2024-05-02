@@ -1,11 +1,11 @@
 # 1. Hardware requirement 
 
 ## Minimal requirements
-- Raspberry Pi (RPi) 4 2GB single board computers (SBC): 1 for the head node, plus as many cores as you want
-- A multiport Netgear switch (as many ports as Rasberry Pis
+- Raspberry Pi (RPi) 4 2GB+ single board computers (SBC): 1 for the head node, plus as many nodes as as you want
+- A multiport Netgear switch (as many ports as Rasberry Pis)
 - 10BaseT Cat6 ethernet cables (1 per Rasberry Pi)
-- Power supplies for each Rasberry Pi (alternatively: use a PuE switch to power all Rasberry Pis)
-- An 8GB flash drive for shared storage
+- Power supplies for each Rasberry Pi (alternatively: use a PoE switch to power all Rasberry Pis)
+- A 8GB flash drive for shared storage
 - A 32GB SD card to boot the main node from
 - Cooling device (e.g. USB desktop fan)
  
@@ -14,34 +14,55 @@
   - 3D printed DIN Rail stand
   - 3D printed RPi cases
 
-# 2. Setup: connecting together
-- 
-
-# 3. Initial configuration 
+# 2. Initial configuration
 _TODO From https://github.com/carpentriesoffline/CarpentriesOffline.github.io/blob/main/rpiimage_step_by_step.md_
 
 ## Creating an SD card image: step-by-step
 
 ###  Setting up a Raspberry Pi
 
-The official [Set up your SD card](https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up/2) is up to date as of 2/05/2024. The Raspberry Pi Imager work as expected on Windows.
+The official [Set up your SD card](https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up/2) is up to date as of 2nd of May 2024.
 
-* When using the The Raspberry Pi Imager,
+When using the The Raspberry Pi Imager, select the Device and OS.
 
-![Screenshot 2024-05-02 120352](https://github.com/carpentriesoffline/CW24_Build_miniHPC/assets/1506457/c7d4fc94-0285-4d88-8a02-2d129480b4c3)
+The OS selection should be `Raspberry Pi OS (other)` -> `Raspberry Pi OS Lite (64-bit)`.
 
-it will ask if the user wants to do any customisation
+![image alt >](../imgs/screenshots/imager-hero-shot.png)
 
-![Screenshot 2024-05-02 120407](https://github.com/carpentriesoffline/CW24_Build_miniHPC/assets/1506457/c0182ff7-6993-4f6d-9d25-6d637679e8fa)
+Selecting the device:
 
-User should select to apply some customisation to configure the Wi-Fi
+![image alt >](../imgs/screenshots/imager-device-selection.png)
 
-![Screenshot 2024-05-02 120430](https://github.com/carpentriesoffline/CW24_Build_miniHPC/assets/1506457/16b0ad5e-cfcd-4762-9537-0e1d66a1d78f)
 
-and enable SSH
+Selecting the OS:
 
-![Screenshot 2024-05-02 120838 pixelise](https://github.com/carpentriesoffline/CW24_Build_miniHPC/assets/1506457/82195fe0-a26e-4d49-b393-674c5ea01bed)
+![](../imgs/screenshots/imager-OS-selection-1.png)
 
+![](../imgs/screenshots/imager-OS-selection-2.png)
+
+it will ask if the user wants to do any customisation, select `EDIT SETTINGS`.
+
+![](../imgs/screenshots/imager-customiser-dialog.png)
+
+This will show a pop-up window where the following configuration options can be defined for your set-up (below are examples) such that your OS is pre-configured upon first boot.
+
+1. Hostname: `CW24miniHPC`
+1. Username: `cw24`
+1. Password: `*****`
+1. WiFI SSID and Password: Enter your WiFi details
+
+![](../imgs/screenshots/imager-os-config.png)
+
+and enable SSH with password authentication (alternatively, adding a ssh public key). If you would like to set up easy access to the Pi via an ssh key, please see [here](ssh-setup.md).
+
+_TODO: Section on generating an ssh key-pair._
+
+![](../imgs/screenshots/imager-pwd-setup.png)
+
+
+After, saving this, select `YES` to apply the configuration.
+
+![](../imgs/screenshots/imager-os-config-apply.png)
 
 ### Setup for headless config (useful if you don't have a screen and keyboard to hand) -> TODO
 * In the boot (small FAT32) partition on the SD card create an empty file called "ssh"
