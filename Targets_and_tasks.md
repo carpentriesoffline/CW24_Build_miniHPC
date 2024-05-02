@@ -2,3 +2,4 @@
 |---|---|---|---|
 |[ ]|Hardware requirements| | |
 |[ ]|Assembling instructions| | |
+|[ ]|Presentation| | |
