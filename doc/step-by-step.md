@@ -227,6 +227,10 @@ SlurmdLogFile=/var/log/slurm/slurmd.log
 PartitionName=pixiecluster Nodes=pixie[002-006] Default=YES MaxTime=INFINITE State=UP
 RebootProgram=/etc/slurm/slurmreboot.sh
 ```
+Restart slurm
+```
+sudo systemctl restart slurmctld
+```
 
 - Install ESSI
 ```
