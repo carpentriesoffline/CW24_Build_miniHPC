@@ -1,3 +1,5 @@
+This is a step by step guide on how to set up a miniHPC using Raspberry Pis.
+
 # 1. Hardware requirement 
 
 ## Minimal requirements
@@ -40,6 +42,10 @@ Selecting the OS:
 
 ![](../imgs/screenshots/imager-OS-selection-2.png)
 
+After this, please select the sdcard you would like to flash the image on, Then press `NEXT`.
+
+![](../imgs/screenshots/imager-sd-card-selection.png)
+
 it will ask if the user wants to do any customisation, select `EDIT SETTINGS`.
 
 ![](../imgs/screenshots/imager-customiser-dialog.png)
@@ -64,82 +70,55 @@ After, saving this, select `YES` to apply the configuration.
 
 ![](../imgs/screenshots/imager-os-config-apply.png)
 
-### Setup for headless config (useful if you don't have a screen and keyboard to hand) -> TODO
-* In the boot (small FAT32) partition on the SD card create an empty file called "ssh"
-* If you're using WiFi to get access to the Pi, create a file called wpa_supplicant.conf in the boot partition. Paste in the following and set your network SSID and password appropriately.
+Confim writing to the sdcard (please backup any data on the sdcard, any existing data will be **LOST!**)
 
-```
-#set this to your country code, gb=great britain
-country=gb
-update_config=1
-ctrl_interface=/var/run/wpa_supplicant
-
-network={
- scan_ssid=1
- ssid="my_networks_ssid"
- psk="my_networks_password"
-}
-```
-
-#### Login to the Pi
-Use SSH or login with a local console if you have a monitor attached.
-
-#### Run the install script
-* Login to your Raspberry Pi with an SSH client or on a local screen/keyboard and run the command:
-* ```curl https://raw.githubusercontent.com/carpentriesoffline/carpentriesoffline-installer/main/setup.sh > setup.sh && bash ./setup.sh```
-
-#### Change the password
-* Run the `passwd` command. Leaving the default password will mean anybody in your workshop can login to your Pi and change settings on it.
-
-#### Connect to Carpentries Offline
-* After installing the Raspberry Pi will reboot.
-* It will then switch the WiFi interface to access point mode and will be available as a network called carpentries-offline.
-* Connect to the carpentries-offline WiFi network
-* Visting [http://carpentriesoffline.org](http://carpentries.org) or [http://192.168.1.1](http://192.168.1.1)
-* You should get links to the Carpentries Lessons and the Gitea server on the Raspberry Pi
-
-#### Using PyPi and CRAN mirrors from your Pi
-* These are downloaded to the Pi and placed in [http://192.168.1.1/pypi](http://192.168.1.1/pypi) and [http://192.168.1.1/miniCRAN](http://192.168.1.1/miniCRAN).
-* You will need to update your settings to use these locations. (TODO: write instructions on how to do this)
-
-
+![](../imgs/screenshots/imager-confirm-sdcard-write.png)
 
 # Installing SLURM/HPC
 
 ## Setting up the miniHPC login node
+
+- Login to the Pi
+Use SSH or login with a local console if you have a monitor attached. Use the login details you used above to log into the Pi.
+
+```bash
+ssh <USERNAME>@<IP-ADDRESS>
+```
+
+In this example, the username would be `cw24`
+
 - Do an update and a full-upgrade:
 
 ```bash
-sudo apt-get update
-sudo apt-get full-upgrade
+sudo apt update
+sudo apt full-upgrade
 ```
 
-- Install the following packages:
+- Install required dependencies.
 
 ```bash
-sudo apt-get install -y nfs-kernel-server lmod ansible slurm munge nmap \ 
+sudo apt install -y nfs-kernel-server lmod ansible slurm munge nmap \
 nfs-common net-tools build-essential htop net-tools screen vim python3-pip \
 dnsmasq slurm-wlm
 ```
 
-
 - Setup the Cluster network
 
-Place the following into /etc/network/interfaces
+Place the following into `/etc/network/interfaces`
 
-```
+```bash
 auto eth0
 allow-hotplug eth0
 iface eth0 inet static
   address 192.168.5.101
   netmask 255.255.255.0
 source /etc/network/interfaces.d/*
-```  
+```
 
 - Modify the hostname
 
 ```bash
-echo pixie001 | sudo tee -a /etc/hostname
+echo pixie001 | sudo tee /etc/hostname
 ```
 
 - Configure dhcp by entering the following in the file `/etc/dhcpd.conf`
@@ -161,7 +140,7 @@ bogus-priv
 dhcp-range=192.168.0.1,192.168.0.100,255.255.255.0,12h
 ```
 
-- Configure shared drives by addeding the following at the end of the file `/etc/exports`
+- Configure shared drives by adding the following at the end of the file `/etc/exports`
 
 ```bash
 /sharedfs    192.168.0.0/24(rw,sync,no_root_squash,no_subtree_check)
@@ -176,8 +155,10 @@ dhcp-range=192.168.0.1,192.168.0.100,255.255.255.0,12h
 ff02::1		ip6-allnodes
 ff02::2		ip6-allrouters
 
+# This login node's hostname
 127.0.1.1	pixie001
 
+# IP and hostname of compute nodes
 192.168.0.2	pixie002
 192.168.0.3	pixie003
 192.168.0.4	pixie004
@@ -186,20 +167,19 @@ ff02::2		ip6-allrouters
 
 
 - Install ESSI
-- 
-```
+
+```bash
 mkdir essi
 cd essi
 wget https://raw.githubusercontent.com/EESSI/eessi-demo/main/scripts/install_cvmfs_eessi.sh
 sudo bash ./install_cvmfs_eessi.sh
-echo "source /cvmfs/software.eessi.io/versions/2023.06/init/bash" >> /etc/profile
+echo "source /cvmfs/software.eessi.io/versions/2023.06/init/bash" | sudo tee -a /etc/profile
 ```
 
-- Create a shared directory
+- Create a shared directory.
 
 ```bash
 sudo mkdir /sharedfs
 sudo chown nobody.nogroup -R /sharedfs
 sudo chmod 777 -R /sharedfs
 ```
-
