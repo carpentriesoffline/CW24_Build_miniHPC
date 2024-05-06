@@ -3,9 +3,11 @@ The initial part of this work was undertaken at the [Software Sustainability Ins
 
 Participants in the hack: Jannetta Steyn, Bryn Noel Ubald, Andrew Walker, Loïc Lannelongue, Colin Sauze, Raniere Silva, Mario Antonioletti.
 
-The aim of this work is to document and automate the process of building and configuring a 'min HPC cluster' (shown below) based on Rasberry PIs to facilitate the delivery of training and outreach. 
+This work aims to document and automate the process of building and configuring a 'min HPC cluster' (shown below) based on Rasberry PIs to facilitate the delivery of training and outreach. 
 
+<p align="center" width="100%">
 ![The platform](imgs/minihpc.jpg)
+</p>p>
 
 In detail, the objectives are to:
 
