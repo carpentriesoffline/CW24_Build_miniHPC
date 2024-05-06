@@ -1,0 +1,12 @@
+[all]
+minihpc01 ansible_host=10.9.141.205
+
+[all:vars]
+
+[headnode]
+minihpc01
+
+[computenodes]
+minihpc02
+minihpc03
+minihpc04

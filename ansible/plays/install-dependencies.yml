@@ -1,0 +1,26 @@
+- name: Install Dependencies
+  hosts:
+    - headnode
+  become: true
+  tasks:
+    - name: Install dependencies
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - ansible
+          - build-essential
+          - dnsmasq
+          - htop
+          - lmod
+          - munge
+          - net-tools
+          - net-tools
+          - nfs-common
+          - nfs-kernel-server
+          - nmap
+          - python3
+          - python3-pip
+          - screen
+          - slurm
+          - slurm-wlm
+          - vim
