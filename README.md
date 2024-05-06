@@ -7,7 +7,7 @@ This work aims to document and automate the process of building and configuring 
 
 <p align="center" width="100%">
 ![The platform](imgs/minihpc.jpg)
-</p>p>
+</p>
 
 In detail, the objectives are to:
 
