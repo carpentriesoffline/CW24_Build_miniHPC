@@ -6,7 +6,7 @@ Participants in the hack: Jannetta Steyn, Bryn Noel Ubald, Andrew Walker, Loïc 
 This work aims to document and automate the process of building and configuring a 'min HPC cluster' (shown below) based on Rasberry PIs to facilitate the delivery of training and outreach. 
 
 <p align="center" width="100%">
-![The platform](imgs/minihpc.jpg)
+<img src="imgs/minihpc.jpg" alt="The target platform."/>
 </p>
 
 In detail, the objectives are to:
