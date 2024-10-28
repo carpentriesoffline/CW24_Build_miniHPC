@@ -140,6 +140,10 @@ bogus-priv
 dhcp-range=192.168.0.1,192.168.0.100,255.255.255.0,12h
 ```
 
+- Configure slurm
+   - edit /etc/slurm/slurm.conf
+   - change all occurences of pixie to your cluster name
+   - Add `NodeName=cluster001 NodeAddr=192.168.5.101 CPUs=4 State=Unknown` for each node in the cluster
 - Configure shared drives by adding the following at the end of the file `/etc/exports`
 
 ```bash
