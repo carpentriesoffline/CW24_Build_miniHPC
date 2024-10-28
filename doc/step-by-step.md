@@ -241,11 +241,15 @@ sudo chmod 777 -R /sharedfs
   
 Flash another SD card for a Raspberry Pi. Boot it up with internet access and run the following:
 
-```sudo apt-get install -y slurmd slurm-client munge vim ntp ntpdate```
+```bash
+sudo apt-get install -y slurmd slurm-client munge vim ntp ntpdate
+```
 
 - On a Linux laptop (or with a USB SD card reader) take an image of this:
 
-```dd if=/dev/mmcblk0 of=node.img```
+```bash
+dd if=/dev/mmcblk0 of=node.img
+```
 
 - Copy node.img to the master Raspberry Pi's home directory.
 
@@ -274,14 +278,17 @@ This will create an entry with the serial number in /pxe-boot and /pxe-root.
 
 - Copy the Slurm config to the node filesystems
 
-`cp /etc/slurm/slurm.conf /pxe-root/*/etc/slurm/`
+```bash
+cp /etc/slurm/slurm.conf /pxe-root/*/etc/slurm/
+````
  
 
 ## Test PXE booting
 * Boot up a client
 * Run sinfo to see if the cluster is working
 You should see something like
-```
+
+```bash
 PARTITION     AVAIL  TIMELIMIT  NODES  STATE NODELIST
 pixiecluster*    up   infinite      5   idle pixie[002-006]
 ```
