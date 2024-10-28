@@ -210,7 +210,8 @@ SlurmdDebug=info
 SlurmdLogFile=/var/log/slurm/slurmd.log
 PartitionName=pixiecluster Nodes=pixie[002-002] Default=YES MaxTime=INFINITE State=UP
 RebootProgram=/etc/slurm/slurmreboot.sh
-NodeName=pixie002 NodeAddr=192.168.5.101 CPUs=4 State=IDLE
+NodeName=pixie001 NodeAddr=192.168.5.101 CPUs=4 State=IDLE
+NodeName=pixie002 NodeAddr=192.168.5.102 CPUs=4 State=IDLE
 ```
 
 - Restart slurm
