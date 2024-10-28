@@ -125,9 +125,9 @@ echo pixie001 | sudo tee /etc/hostname
 
 ```bash
 interface eth0
-static ip_address=192.168.0.1/24
-static routers=192.168.0.1
-static domain_name_servers=192.168.0.1
+static ip_address=192.168.5.101/24
+static routers=192.168.5.101
+static domain_name_servers=192.168.5.101
 ```
 
 - Configure dnsmasq by entering the following in the file `/etc/dnsmasq.conf`
@@ -137,7 +137,7 @@ interface=eth0
 bind-dynamic
 domain-needed
 bogus-priv
-dhcp-range=192.168.0.1,192.168.0.100,255.255.255.0,12h
+dhcp-range=192.168.5.102,192.168.5.200,255.255.255.0,12h
 ```
 
 - Configure slurm
