@@ -140,11 +140,18 @@ bogus-priv
 dhcp-range=192.168.5.102,192.168.5.200,255.255.255.0,12h
 ```
 
+- Create a shared directory.
+
+```bash
+sudo mkdir /sharedfs
+sudo chown nobody:nogroup -R /sharedfs
+sudo chmod 777 -R /sharedfs
+```
+
 - Configure shared drives by adding the following at the end of the file `/etc/exports`
 
 ```bash
 /sharedfs    192.168.5.0/24(rw,sync,no_root_squash,no_subtree_check)
-/modules     192.168.5.0/24(rw,sync,no_root_squash,no_subtree_check)
 ```
 
 - The `/etc/hosts` file should contain the following. Make sure to change all occurences of `pixie` in the script to the name of your cluster:
@@ -220,14 +227,6 @@ cd essi
 wget https://raw.githubusercontent.com/EESSI/eessi-demo/main/scripts/install_cvmfs_eessi.sh
 sudo bash ./install_cvmfs_eessi.sh
 echo "source /cvmfs/software.eessi.io/versions/2023.06/init/bash" | sudo tee -a /etc/profile
-```
-
-- Create a shared directory.
-
-```bash
-sudo mkdir /sharedfs
-sudo chown nobody:nogroup -R /sharedfs
-sudo chmod 777 -R /sharedfs
 ```
 
 - Install a client node
