@@ -140,15 +140,11 @@ bogus-priv
 dhcp-range=192.168.5.102,192.168.5.200,255.255.255.0,12h
 ```
 
-- Configure slurm
-   - edit /etc/slurm/slurm.conf
-   - change all occurences of pixie to your cluster name
-   - Add `NodeName=cluster001 NodeAddr=192.168.5.101 CPUs=4 State=Unknown` for each node in the cluster
 - Configure shared drives by adding the following at the end of the file `/etc/exports`
 
 ```bash
-/sharedfs    192.168.0.0/24(rw,sync,no_root_squash,no_subtree_check)
-/modules     192.168.0.0/24(rw,sync,no_root_squash,no_subtree_check)
+/sharedfs    192.168.5.0/24(rw,sync,no_root_squash,no_subtree_check)
+/modules     192.168.5.0/24(rw,sync,no_root_squash,no_subtree_check)
 ```
 
 - The `/etc/hosts` file should contain the following:
@@ -171,7 +167,7 @@ ff02::2		ip6-allrouters
 
 - Configure Slurm
 
-Add the following to /etc/slurm/slurm.conf
+Add the following to /etc/slurm/slurm.conf. Change all occurences of `pixie` in this script to the name of your cluster.
 
 ```
 SlurmctldHost=pixie001(192.168.5.101)
@@ -211,6 +207,7 @@ SlurmdLogFile=/var/log/slurm/slurmd.log
 #adjust Nodes=pixie[002-006] to the number of nodes you have
 PartitionName=pixiecluster Nodes=pixie[002-006] Default=YES MaxTime=INFINITE State=UP
 RebootProgram=/etc/slurm/slurmreboot.sh
+NodeName=pixie002 NodeAddr=192.168.5.101 CPUs=4 State=IDLE
 ```
 
 - Restart slurm
