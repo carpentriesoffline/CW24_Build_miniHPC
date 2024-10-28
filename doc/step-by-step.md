@@ -147,7 +147,7 @@ dhcp-range=192.168.5.102,192.168.5.200,255.255.255.0,12h
 /modules     192.168.5.0/24(rw,sync,no_root_squash,no_subtree_check)
 ```
 
-- The `/etc/hosts` file should contain the following:
+- The `/etc/hosts` file should contain the following. Make sure to change all occurences of `pixie` in the script to the name of your cluster:
 
 ```bash
 127.0.0.1	localhost
@@ -159,10 +159,7 @@ ff02::2		ip6-allrouters
 127.0.1.1	pixie001
 
 # IP and hostname of compute nodes
-192.168.0.2	pixie002
-192.168.0.3	pixie003
-192.168.0.4	pixie004
-192.168.0.5	pixie005
+192.168.5.102	pixie002
 ```
 
 - Configure Slurm
