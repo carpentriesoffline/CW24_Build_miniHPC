@@ -238,15 +238,16 @@ sudo chmod 777 -R /sharedfs
 ```
 
 - Install a client node
+  
 Flash another SD card for a Raspberry Pi. Boot it up with internet access and run the following:
 
 ```sudo apt-get install -y slurmd slurm-client munge vim ntp ntpdate```
 
-On a Linux laptop (or with a USB SD card reader) take an image of this:
+- On a Linux laptop (or with a USB SD card reader) take an image of this:
 
 ```dd if=/dev/mmcblk0 of=node.img```
 
-Copy node.img to the master Raspberry Pi's home directory.
+- Copy node.img to the master Raspberry Pi's home directory.
 
 
 - Setup PXE booting
