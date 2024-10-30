@@ -230,6 +230,24 @@ sudo bash ./install_cvmfs_eessi.sh
 echo "source /cvmfs/software.eessi.io/versions/2023.06/init/bash" | sudo tee -a /etc/profile
 ```
 
+### Configure munge
+
+- Create munge key
+  
+```bash
+sudo mkdir /etc/munge
+dd if=/dev/urandom bs=1 count=1024 | sudo tee -a /etc/munge/munge.key
+```
+
+- Set ownership
+
+ ```bash
+sudo chown munge: /etc/munge/munge.key
+sudo chmod 400 /etc/munge/munge.key
+```
+
+
+
 ## Setting up a compute node
 
 Flash another SD card for a Raspberry Pi. Boot it up with internet access and run the following:
@@ -291,3 +309,7 @@ You should see something like
 PARTITION     AVAIL  TIMELIMIT  NODES  STATE NODELIST
 pixiecluster*    up   infinite      5   idle pixie[002-006]
 ```
+
+# Links:
+- https://www.clearlinux.org/clear-linux-documentation/tutorials/hpc.html
+- https://www.quantstart.com/articles/building-a-raspberry-pi-cluster-for-qstrader-using-slurm-part-3/
