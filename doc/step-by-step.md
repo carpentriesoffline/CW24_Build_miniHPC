@@ -230,13 +230,18 @@ sudo bash ./install_cvmfs_eessi.sh
 echo "source /cvmfs/software.eessi.io/versions/2023.06/init/bash" | sudo tee -a /etc/profile
 ```
 
-- Install a client node
-  
+## Setting up a compute node
+
 Flash another SD card for a Raspberry Pi. Boot it up with internet access and run the following:
 
 ```bash
 sudo apt-get install -y slurmd slurm-client munge vim ntp ntpdate
 ```
+
+- Copy the slurm config of the login node to `/etc/slurm/slurm.conf`
+- Copy the `/etc/munge/munge.key` from the login node to the client node
+
+## Making an image of the compute node OS
 
 - On a Linux laptop (or with a USB SD card reader) take an image of this:
 
@@ -247,7 +252,7 @@ dd if=/dev/mmcblk0 of=node.img
 - Copy node.img to the master Raspberry Pi's home directory.
 
 
-- Setup PXE booting
+## Setup PXE booting
 
 Download the pxe-boot scripts:
 
