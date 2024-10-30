@@ -238,8 +238,9 @@ Flash another SD card for a Raspberry Pi. Boot it up with internet access and ru
 sudo apt-get install -y slurmd slurm-client munge vim ntp ntpdate
 ```
 
+- Copy the `/etc/hosts` from the login node to the compute node
 - Copy the slurm config of the login node to `/etc/slurm/slurm.conf`
-- Copy the `/etc/munge/munge.key` from the login node to the client node
+- Copy the `/etc/munge/munge.key` from the login node to the compute node
 
 ## Making an image of the compute node OS
 
